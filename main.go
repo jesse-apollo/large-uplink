@@ -139,9 +139,14 @@ func main() {
 	// proxy testing only
 	//http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
 	http.HandleFunc("/uplink", uplinkHandler)
 	http.HandleFunc("/apollo_webhook", webhookHandler)
 
 	fmt.Printf("Large Uplink server starting...\n")
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(fmt.Sprintf(":%s", port), nil)
 }
