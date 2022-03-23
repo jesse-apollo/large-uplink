@@ -115,6 +115,7 @@ func downloadGCSFile(bucket, object, signature string) ([]byte, string, error) {
 
 func deleteGCSFile(bucket, object string) error {
 	log.Debugf("deleteGCSFile: %s/%s", bucket, object)
+
 	ctx := context.Background()
 	client, err := storage.NewClient(ctx)
 	if err != nil {
