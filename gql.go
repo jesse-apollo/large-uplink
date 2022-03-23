@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -110,12 +109,9 @@ func downloadSupergraph(graphID, variant, apiKey string) (*SupergraphResult, err
 
 	body, _ := json.Marshal(q)
 
-	//proxyUrl, _ := url.Parse("http://localhost:8000")
 	tr := &http.Transport{
 		DisableKeepAlives:  true,
 		DisableCompression: false,
-		TLSClientConfig:    &tls.Config{InsecureSkipVerify: true},
-		//Proxy:              http.ProxyURL(proxyUrl),
 	}
 
 	httpClient := http.Client{Transport: tr}
