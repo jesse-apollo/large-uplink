@@ -7,7 +7,7 @@ build-container:
 
 deploy: 
 	gcloud run deploy large-uplink --image gcr.io/${GCS_PROJECT}/large-uplink --allow-unauthenticated \
-		--region us-east1 --update-env-vars GCS_BUCKET=${GCS_BUCKET}
+		--region us-east1 --update-env-vars GCS_BUCKET=${GCS_BUCKET} --platform managed
 
 push: build-container
 	docker tag large-uplink gcr.io/${GCS_PROJECT}/large-uplink

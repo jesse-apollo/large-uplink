@@ -98,7 +98,7 @@ func downloadGCSFile(bucket, object, signature string) ([]byte, string, error) {
 		return nil, "", fmt.Errorf("ioutil.ReadAll: %v", err)
 	}
 
-	log.Debugf("Blob %v downloaded.\n", object)
+	log.Debugf("Blob %v downloaded.", object)
 
 	// get metadata to confirm access
 	attrs, err := o.Attrs(ctx)
@@ -114,8 +114,7 @@ func downloadGCSFile(bucket, object, signature string) ([]byte, string, error) {
 }
 
 func deleteGCSFile(bucket, object string) error {
-	// bucket := "bucket-name"
-	// object := "object-name"
+	log.Debugf("deleteGCSFile: %s/%s", bucket, object)
 	ctx := context.Background()
 	client, err := storage.NewClient(ctx)
 	if err != nil {

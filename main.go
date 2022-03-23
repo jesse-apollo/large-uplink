@@ -99,8 +99,10 @@ func uplinkHandler(w http.ResponseWriter, req *http.Request) {
 
 // webhookHandler - write incoming supergraph to GCS
 func webhookHandler(w http.ResponseWriter, req *http.Request) {
-	//signingKey := os.Getenv("APOLLO_SIGNING_KEY")
+
 	bucket := os.Getenv("GCS_BUCKET")
+
+	log.Debug("Webhook handler")
 
 	var buildStatus BuildStatusWebhook
 
@@ -119,7 +121,9 @@ func webhookHandler(w http.ResponseWriter, req *http.Request) {
 	}
 
 	// Object name for GCS
-	objectName := fmt.Sprintf("%s@%s.graphql", buildStatus.GraphID, buildStatus.VariantID)
+	objectName := fmt.Sprintf("%s.graphql", buildStatus.VariantID)
+
+	log.Debugf("Deleting GCS file: %s (%s)", buildStatus.GraphID, buildStatus.VariantID)
 
 	// clear cache (delete GCS storage copy of supergraph)
 	err = deleteGCSFile(bucket, objectName)
