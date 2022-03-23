@@ -8,6 +8,6 @@ To build the container run `make build`
 
 ## Deploy to Cloud Run
 
- 1. Edit the `cloudbuild.yaml` file to change the __<CHANGE_ME>__ items to your project name.
- 2. Create a `.env` file with a `GCS_BUCKET` key set to your GCS bucket name.
- 3. Run `make deploy`
+ 1. Copy `dot_env` to `.env` and add your GCP bucket and project name.
+ 2. Run `make push` to build/deploy docker image to GCR.
+ 3. Run `make deploy` to deploy to Cloud Run
