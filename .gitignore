@@ -1,0 +1,6 @@
+.env
+go.sum
+*.json
+large-uplink
+build/*
+misc/*
