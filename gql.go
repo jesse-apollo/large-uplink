@@ -32,6 +32,48 @@ const SupergraphQuery = `query SupergraphFetchQuery($graph_id: ID!, $variant: St
 }
 `
 
+const EntitlementQuery = `query LicenseQuery($apiKey: String!, $graph_ref: String!, $ifAfterId: ID) {
+
+    routerEntitlements(ifAfterId: $ifAfterId, apiKey: $apiKey, ref: $graph_ref) {
+        __typename
+        ... on RouterEntitlementsResult {
+            id
+            minDelaySeconds
+            entitlement {
+                jwt
+            }
+        }
+        ... on Unchanged {
+            id
+            minDelaySeconds
+        }
+        ... on FetchError {
+            code
+            message
+        }
+    }
+}
+`
+
+type Entitlement struct {
+	JWT string `json:"jwt"`
+}
+
+type RouterEntitlements struct {
+	TypeName        string      `json:"__typename"`
+	ID              string      `json:"id"`
+	MinDelaySeconds int         `json:"minDelaySeconds"`
+	Entitlement     Entitlement `json:"entitlement"`
+}
+
+type EntitlementFetch struct {
+	RouterEntitlements RouterEntitlements `json:"routerEntitlements"`
+}
+
+type EntitlementResult struct {
+	Data EntitlementFetch `json:"data"`
+}
+
 type GQLQuery struct {
 	Variables     map[string]interface{} `json:"variables"`
 	Query         string                 `json:"query"`
@@ -94,6 +136,11 @@ type SupergraphFetch struct {
 
 type SupergraphResult struct {
 	Data SupergraphFetch `json:"data"`
+}
+
+func fetchEntitlements(graphID, variant, apiKey string) (*EntitlementResult, error) {
+
+	return nil, nil
 }
 
 func downloadSupergraph(graphID, variant, apiKey string) (*SupergraphResult, error) {
